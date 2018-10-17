@@ -1,6 +1,17 @@
-import { combineReducers } from 'redux';
-import keys from './keys_reducer';
+import { combineReducers, createStore, applyMiddleware, compose } from 'redux'
+import AppNavigation from '../Navigation/AppNavigation'
 
-export default combineReducers({
-    keys
-})
+const navReducer = (state, action) => {
+  const newState = AppNavigation.router.getStateForAction(action, state)
+  return newState || state
+}
+
+export default () => {
+  /* ------------- Assemble The Reducers ------------- */
+  const rootReducer = combineReducers({
+    nav: navReducer
+  })
+
+  // return store
+  return createStore(rootReducer)
+}

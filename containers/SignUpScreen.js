@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
+import SignUpForm from '../Components/SignUpForm'
 import LoginForm from '../Components/LoginForm'
-import Colors from '../Themes/Colors'
-class SignInScreen extends Component { 
+import Colors from '../Themes/Colors';
+
+class SignUpScreen extends Component { 
     static navigationOptions = ({ navigation }) => ({
-        title: 'Sign In'
+        title: 'Sign Up'
     })
 
     constructor(props){
         super(props)
+
+        this.state = {
+            firstName: '',
+            lastName: '',
+            zipCode: '',
+            email: '',
+            password: ''
+        }
     }
 
     render(){
@@ -16,10 +26,19 @@ class SignInScreen extends Component {
 
         return (
             <View style={styles.container}>
-                <LoginForm/>
+                <View>
+                    <Text style={styles.formHeader}> Personal Info </Text>
+                    <SignUpForm fields={['firstName', 'lastName', 'zipCode']}/>
+                </View>
+
+                <View>
+                    <Text style={styles.formHeader}> Security </Text>
+                    <LoginForm/>
+                </View>
+
                 <View style={styles.buttonWrapper}>
                     <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
-                        <Text style={styles.textStyle}>Sign In</Text>
+                        <Text style={styles.textStyle}>Sign Up</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -27,11 +46,16 @@ class SignInScreen extends Component {
     }
 }
 
-export default SignInScreen;
+export default SignUpScreen;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+    },
+    formHeader: {
+        fontSize: 20, 
+        fontWeight: 'bold',
+        padding: 10
     },
     buttonWrapper: {
         alignItems: 'center',
@@ -50,8 +74,8 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
       textStyle: {
-          fontSize: 16,
-          fontWeight: 'bold', 
-          color: 'white'
+        fontSize: 16,
+        fontWeight: 'bold', 
+        color: 'white'
     }
 })

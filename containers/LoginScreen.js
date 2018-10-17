@@ -1,69 +1,59 @@
 import React, {Component} from 'react';
-import {Button, Image, TouchableOpacity, StyleSheet, Text, View, Dimensions, ScrollView} from 'react-native';
-import { getBrands } from '../constants/api';
-import Header from '../components/Header'
-import Category from '../components/home/Category';
+import {TouchableOpacity, StyleSheet, Text, View, ScrollView} from 'react-native';
+import Category from '../Components/Category';
+import Colors from '../Themes/Colors'
+import Ionicon from 'react-native-vector-icons/Ionicons'
 
 export default class LoginScreen extends Component {
+    constructor(props){
+        super(props)
+    }
+
     static navigationOptions = ({ navigation }) => ({
-        headerLeft: (
-            <Button title="Sign In" onPress={() => navigation.navigate('SignIn')}/>
+        headerLeft: ( 
+            <View style={{ flex:1 }}>
+                <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+                    <Ionicon name='md-person' size={20} style={styles.icon}>
+                        <Text style={styles.textStyle}> Sign In</Text>
+                    </Ionicon>
+                </TouchableOpacity>
+            </View>
         )
     })
 
-  constructor(props){
-    super(props)
+    componentDidUpdate(prevProps){
+        console.log("thes are the prev props")
+        console.dir(prevProps);
 
-    console.log("these are the props")
-    console.dir(props)
-  }
-  // static defaultProps = {
-  //   getBrands
-  // }
+        console.log("these are the new props ")
+        console.dir(this.props)
+    }
 
-  state = {
-    loading: false,
-    brands: []
-  }
-
-  componentDidMount(){
-    this.setState({ loading: true });
-    const data = this.props.getBrands;
-  }
-
-  componentWillMount(){
-    console.log("new data? ");
-    console.dir(this.state)
-  }
-
-  render() {
+  //the images here can come straight from our images or from the s3 asset bucket
+  //probably the second one tbh
+  render() {      
     return (
       <View style={styles.container}>
         <ScrollView scrollEventThrottle={16}>
             <View style={{flex: 1, backgroundColor: 'white', paddingTop: 20}}>
-                <Text style={{ fontSize: 24, fontWeight: '700', paddingHorizontal: 20 }}>
-                    It's a great day for groceries
-                </Text>
-
                 <View>
                     <ScrollView>
-                        <Category imageUri={require('../images/scanBackground.png')}/>
-                        <Category imageUri={require('../images/pup1.jpg')}/>
-                        <Category imageUri={require('../images/pup2.png')}/>
-                        <Category imageUri={require('../images/pup3.png')}/>
+                        <Category imageUri={require('../Images/scanBackground.png')}/>
+                        <Category imageUri={require('../Images/pup1.jpg')}/>
+                        <Category imageUri={require('../Images/pup2.png')}/>
+                        <Category imageUri={require('../Images/pup3.png')}/>
                     </ScrollView>
                 </View>
             </View>
         </ScrollView>
 
-        <TouchableOpacity style={styles.buttonWrapper}>
-            <Text style={styles.textStyle}>Join now</Text>
+        <TouchableOpacity style={styles.buttonWrapper} onPress={() => this.props.navigation.navigate('SignUp')}>
+            <Text style={[styles.textStyle, {color: 'white'}]}>Join now</Text>
         </TouchableOpacity>
       </View>
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -71,30 +61,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  headerBackground: {
-    height: 100,
-    width: Dimensions.get('window').width
-  },
-  signinWrapper: {
-    fontSize: 20,
-    paddingTop: 50,
-    paddingLeft: 10
-  },
   buttonWrapper: {
-    backgroundColor: "green", /* Green */
+    backgroundColor: Colors.jaffa, 
     padding: 20,
     textAlign: 'center',
     fontSize: 16,
     marginTop: 4,
     marginRight: 2,
     borderRadius: 75,
-    bottom: 15, //Dimensions.get('window').height, 
+    bottom: 20, 
     right: 10,
     position: 'absolute'
   },
   textStyle: {
       fontSize: 16,
-      fontWeight: 'bold', 
-      color: 'white'
+      fontWeight: 'bold'
+  },
+  icon:{
+      padding: 10
   }
 });

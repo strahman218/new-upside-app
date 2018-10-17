@@ -1,22 +1,17 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'
 
-class HomeScreen extends Component {
-    static navigationOptions = ({ navigation }) => ({
-        title: "Home"
-    });
-
+class SettingScreen extends Component {
     render(){
         return (
             <View style={styles.container}>
-                <Text>Home Screen</Text>
+                <Text>SettingScreen</Text>
             </View>
         )
     }
 }
 
-export default HomeScreen
+export default SettingScreen
 
 const styles = StyleSheet.create({
     container: {
